@@ -5,11 +5,15 @@ header('Content-Type: application/json');
 // Simuleer een databasebestand in JSON-formaat.
 $response_json = '{
     "123": ["badge1", "badge2"],
-    "456": ["badge3"]
+    "456": ["badge3"],
+    "260451031899570176": ["The_Judge"]
 }';
 
 // Converteer de JSON-string naar een PHP-array.
 $badges_data = json_decode($response_json, true);
+
+// Definieer de directory waar de badge PNG-bestanden zich bevinden.
+$badges_directory = __DIR__ . '/badges/';
 
 if (isset($_GET['id'])) {
     $user_id = $_GET['id'];
@@ -20,10 +24,12 @@ if (isset($_GET['id'])) {
     }
 } elseif (isset($_GET['badge'])) {
     $badge_name = $_GET['badge'];
-    $badge_file_path = __DIR__ . "/badges/{$badge_name}.png";
+    // Zorg ervoor dat de extensie overeenkomt met het bestandstype, bijvoorbeeld .gif voor GIF-bestanden.
+    $badge_file_path = $badges_directory . "{$badge_name}.gif";
 
     if (file_exists($badge_file_path)) {
-        header('Content-Type: image/png');
+        // Update de Content-Type header voor GIF-bestanden.
+        header('Content-Type: image/gif');
         readfile($badge_file_path);
     } else {
         echo json_encode(["error" => "Badge niet gevonden"]);
