@@ -24,12 +24,12 @@ if (isset($_GET['id'])) {
     }
 } elseif (isset($_GET['badge'])) {
     $badge_name = $_GET['badge'];
-    // Zorg ervoor dat de extensie overeenkomt met het bestandstype, bijvoorbeeld .gif voor GIF-bestanden.
-    $badge_file_path = $badges_directory . "{$badge_name}.gif";
+    // Zorg ervoor dat de extensie overeenkomt met het bestandstype, bijvoorbeeld .png voor PNG-bestanden.
+    $badge_file_path = $badges_directory . "{$badge_name}.png";
 
     if (file_exists($badge_file_path)) {
-        // Update de Content-Type header voor GIF-bestanden.
-        header('Content-Type: image/gif');
+        // Update de Content-Type header voor PNG-bestanden.
+        header('Content-Type: image/png');
         readfile($badge_file_path);
     } else {
         echo json_encode(["error" => "Badge niet gevonden"]);
